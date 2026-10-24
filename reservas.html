@@ -61,7 +61,10 @@ h1,h2,h3{margin:0}
 .seg{display:inline-flex;background:var(--gray-soft);border-radius:999px;padding:3px;gap:2px}
 .seg button{border:0;background:transparent;padding:7px 14px;border-radius:999px;font-weight:600;font-size:13px;color:var(--ink-2)}
 .seg button.on{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.08)}
-.spinner{width:22px;height:22px;border:3px solid var(--accent-soft);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;margin:24px auto}
+.spinner{width:34px;height:34px;border:0!important;border-radius:50%;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23D4F01E'/%3E%3Cpath d='M9 14c11 6 15 14 15 18S20 50 9 50M55 14c-11 6-15 14-15 18s4 12 15 18' fill='none' stroke='%23fff' stroke-width='3.6' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;animation:spin 2.6s linear infinite;margin:28px auto;filter:drop-shadow(0 3px 5px rgba(17,20,17,.15))}
+.btn.busy:disabled{opacity:.85;cursor:progress}
+.btn.busy:disabled:before{content:'';width:16px;height:16px;margin-right:8px;flex:none;display:inline-block;vertical-align:-3px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23D4F01E'/%3E%3Cpath d='M9 14c11 6 15 14 15 18S20 50 9 50M55 14c-11 6-15 14-15 18s4 12 15 18' fill='none' stroke='%23fff' stroke-width='3.6' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;animation:spin 2.6s linear infinite}
+@media (prefers-reduced-motion:reduce){.spinner,.btn.busy:disabled:before{animation-duration:6s}}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 /* ---------- demo strip ---------- */
@@ -75,6 +78,17 @@ h1,h2,h3{margin:0}
 .sheet .grab{width:40px;height:4px;border-radius:4px;background:var(--line);margin:-8px auto 12px}
 .sheet-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
 .sheet-head h2{font-size:20px;font-weight:700}
+.sheet{position:relative}
+.wait{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;text-align:center;background:rgba(255,255,255,.94);border-radius:inherit;animation:fadein .35s ease-out}
+.wait.full{position:fixed;z-index:60;border-radius:0;background:rgba(245,246,242,.92)}
+body.barv .wait.full{background:rgba(17,20,17,.9)}body.barv .wait.full h3{color:#fff}
+.wait .ball{width:68px;height:68px;animation:ballspin 2.6s linear infinite;filter:drop-shadow(0 6px 10px rgba(17,20,17,.14))}
+.wait .shadow{width:46px;height:7px;border-radius:50%;background:rgba(17,20,17,.10);margin-top:-8px}
+.wait h3{font-size:18px;font-weight:700;margin:4px 0 0}
+.wait p{font-size:13px;color:var(--muted);margin:0;min-height:18px;transition:opacity .4s}
+@keyframes ballspin{to{transform:rotate(360deg)}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){.wait .ball{animation:ballspin 6s linear infinite}}
 .x{border:0;background:var(--gray-soft);width:32px;height:32px;border-radius:50%;font-size:18px;line-height:1;flex:none}
 @media(min-width:760px){.overlay.side{justify-content:flex-end;align-items:stretch}.overlay.side .sheet{border-radius:0;max-height:none;height:100%;max-width:440px;animation:left .2s ease-out}
   .overlay:not(.side){align-items:center}.overlay:not(.side) .sheet{border-radius:20px}}
@@ -110,8 +124,9 @@ body:before{content:"";position:fixed;left:0;right:0;top:0;height:3px;background
 .court{margin-top:12px}
 .court-h{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
 .court-h h3{font-size:16px;font-weight:700}
-.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:8px}
-.slot{border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 0 7px;text-align:center;font-family:var(--f-mono);font-weight:600;font-size:14px}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px}
+.slot{border:1px solid var(--line);background:var(--surface-2);border-radius:10px;padding:9px 2px 7px;text-align:center;font-family:var(--f-mono);font-weight:600;font-size:13px;white-space:nowrap;letter-spacing:-.2px}
+.slot .a{font-family:var(--f-body);font-weight:500;font-size:11px;color:var(--muted);margin:0 2px}
 .slot small{display:block;font-family:var(--f-body);font-size:11px;font-weight:500;color:var(--muted);margin-top:1px}
 .slot:hover{border-color:var(--accent);background:var(--accent-soft)}
 .slot.off{opacity:.38;text-decoration:line-through;pointer-events:none;background:transparent}
@@ -222,7 +237,7 @@ body:before{content:"";position:fixed;left:0;right:0;top:0;height:3px;background
 .amain{padding:22px 24px;max-width:1100px}
 .amain h2{font-size:22px;font-weight:700;margin-bottom:4px}
 .amain .lead{color:var(--muted);margin:0 0 18px}
-.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin-bottom:18px}
 .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
 .kpi .l{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em}
 .kpi .v{font-family:var(--f-display);font-size:34px;line-height:1.05;margin-top:4px}
@@ -1855,6 +1870,14 @@ var PEArena = (function () {
       var bks = d.bookings.filter(function (b) { return inRange(b.date); });
       var live = bks.filter(function (b) { return ['confirmada', 'checkin', 'concluida'].indexOf(b.status) >= 0; });
       var byStatus = {}; bks.forEach(function (b) { byStatus[b.status] = (byStatus[b.status] || 0) + 1; });
+      // reservado = horário ocupado (pago ou não); faturado = valor efetivamente pago das reservas
+      var nowMs = nowFn();
+      var held = bks.filter(function (b) {
+        if (b.status === 'pendente_pagamento') return !(b.expires_at && Date.parse(b.expires_at) <= nowMs);
+        return ['confirmada', 'checkin', 'concluida', 'no_show'].indexOf(b.status) >= 0;
+      });
+      var paidOf = function (b) { return b.payment_status === 'pago' ? b.price : b.payment_status === 'sinal_pago' ? Math.min(b.price, b.online_amount || 0) : 0; };
+      var sum = function (arr, f) { return round2(arr.reduce(function (acc, b) { return acc + f(b); }, 0)); };
       var ords = d.orders.filter(function (o) { return inRange(local(Date.parse(o.created_at), c.tz_offset_min).date) && ['novo', 'preparando', 'pronto', 'entregue'].indexOf(o.status) >= 0; });
       var pays = d.payments.filter(function (x) { return x.status === 'aprovado' && inRange(local(Date.parse(x.created_at), c.tz_offset_min).date); });
       var byMethod = {}; pays.forEach(function (x) { var k = x.channel + ':' + x.method; byMethod[k] = round2((byMethod[k] || 0) + x.amount); });
@@ -1865,13 +1888,17 @@ var PEArena = (function () {
       var openMin = (toMin(c.close_time) - toMin(c.open_time)) * days;
       var courts = d.courts.filter(function (x) { return x.active; }).map(function (ct) {
         var used = live.filter(function (b) { return b.court_id === ct.court_id; }).reduce(function (s, b) { return s + b.duration_min; }, 0);
-        var rev = live.filter(function (b) { return b.court_id === ct.court_id; }).reduce(function (s, b) { return s + b.price; }, 0);
-        return { court_id: ct.court_id, name: ct.name, hours: round2(used / 60), occupancy: openMin ? round2(used / openMin * 100) : 0, revenue: round2(rev) };
+        var mine = held.filter(function (b) { return b.court_id === ct.court_id; });
+        return { court_id: ct.court_id, name: ct.name, hours: round2(used / 60), occupancy: openMin ? round2(used / openMin * 100) : 0,
+          reserved: sum(mine, function (b) { return b.price; }), billed: sum(mine, paidOf), revenue: sum(mine, function (b) { return b.price; }) };
       });
       var hours = {}; live.forEach(function (b) { hours[b.start] = (hours[b.start] || 0) + 1; });
       return {
         from: from, to: to, days: days,
-        bookings: { total: bks.length, by_status: byStatus, billed: round2(live.reduce(function (s, b) { return s + b.price; }, 0)) },
+        bookings: { total: bks.length, by_status: byStatus,
+          reserved_count: held.length, reserved: sum(held, function (b) { return b.price; }),
+          paid_count: held.filter(function (b) { return b.payment_status === 'pago'; }).length,
+          billed: sum(held, paidOf), to_receive: round2(sum(held, function (b) { return b.price; }) - sum(held, paidOf)) },
         bar: { orders: ords.length, billed: round2(ords.reduce(function (s, o) { return s + o.total; }, 0)),
           ticket: ords.length ? round2(ords.reduce(function (s, o) { return s + o.total; }, 0) / ords.length) : 0,
           top_items: Object.keys(items).map(function (k) { return items[k]; }).sort(function (a, b) { return b.revenue - a.revenue; }).slice(0, 10) },
@@ -2120,7 +2147,7 @@ function api(action, payload, pin) {
       setTimeout(function () {
         var r = local.svc.handle(action, JSON.parse(JSON.stringify(payload || {})), pin);
         if (r.ok) res(r.data); else { var e = new Error(r.error.message); e.code = r.error.code; rej(e); }
-      }, 120);
+      }, window.ARENA_DEMO_DELAY || 120); // ARENA_DEMO_DELAY: simula a latência real do Apps Script em testes
     });
   }
   return fetch(GAS_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action: action, payload: payload || {}, pin: pin }) })
@@ -2173,18 +2200,43 @@ function toast(msg, err) {
   var t = document.createElement('div'); t.className = 'toast' + (err ? ' err' : ''); t.textContent = msg;
   document.body.appendChild(t); setTimeout(function () { t.remove(); }, err ? 4200 : 2600);
 }
-function fail(e) { toast(e && e.message ? e.message : 'Algo deu errado.', true); }
+function fail(e) { Wait.hide(); toast(e && e.message ? e.message : 'Algo deu errado.', true); }
 var sheetToken = 0;
 function openSheet(html, opts) {
-  opts = opts || {}; sheetToken++;
+  opts = opts || {}; sheetToken++; Wait.hide();
   var L = document.getElementById('layer');
   L.innerHTML = '<div class="overlay' + (opts.side ? ' side' : '') + '" data-act="overlay"><div class="sheet" role="dialog" aria-modal="true">' +
     (opts.side ? '' : '<div class="grab"></div>') + html + '</div></div>';
   var f = L.querySelector('[autofocus]'); if (f) setTimeout(function () { f.focus(); }, 50);
   return sheetToken;
 }
-function closeSheet() { sheetToken++; document.getElementById('layer').innerHTML = ''; }
+function closeSheet() { sheetToken++; Wait.hide(); document.getElementById('layer').innerHTML = ''; }
 function sheetOpen(tok) { return tok === sheetToken && document.querySelector('#layer .overlay'); }
+// espera calma: bola de tênis girando devagar sobre a folha aberta enquanto o sistema salva
+var BALL_SVG = '<svg class="ball" viewBox="0 0 64 64" aria-hidden="true"><defs><radialGradient id="tb" cx="38%" cy="32%" r="70%"><stop offset="0" stop-color="#F2FF7A"/><stop offset=".6" stop-color="#D4F01E"/><stop offset="1" stop-color="#A9C40C"/></radialGradient></defs>' +
+  '<circle cx="32" cy="32" r="29" fill="url(#tb)"/><path d="M9 14c11 6 15 14 15 18S20 50 9 50" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/>' +
+  '<path d="M55 14c-11 6-15 14-15 18s4 12 15 18" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg>';
+var Wait = {
+  t: null,
+  show: function (title, steps) {
+    Wait.hide();
+    var sh = document.querySelector('#layer .sheet');
+    var w = document.createElement('div'); w.className = 'wait' + (sh ? '' : ' full'); w.setAttribute('role', 'status'); w.setAttribute('aria-live', 'polite');
+    w.innerHTML = BALL_SVG + '<div class="shadow"></div><h3>' + esc(title) + '</h3><p>' + esc(steps[0] || '') + '</p>';
+    if (sh) { sh.scrollTop = 0; sh.appendChild(w); } else document.body.appendChild(w);
+    var i = 0, p = w.querySelector('p');
+    Wait.t = setInterval(function () {
+      if (!w.isConnected) { clearInterval(Wait.t); return; }
+      if (i >= steps.length - 1) return;
+      i++; p.style.opacity = 0; setTimeout(function () { p.textContent = steps[i]; p.style.opacity = 1; }, 400);
+    }, 3500);
+  },
+  hide: function () {
+    if (Wait.t) clearInterval(Wait.t); Wait.t = null;
+    document.querySelectorAll('.wait').forEach(function (w) { w.remove(); });
+  }
+};
+function busy(btn) { if (!btn) return; btn.disabled = true; btn.classList.add('busy'); }
 function sheetHead(title, sub) { return '<div class="sheet-head"><div><h2>' + esc(title) + '</h2>' + (sub ? '<div class="muted small">' + sub + '</div>' : '') + '</div><button class="x" data-act="close" aria-label="Fechar">×</button></div>'; }
 function every(ms, fn) { var id = setInterval(fn, ms); S.timers.push(id); return id; }
 function clearTimers() { S.timers.forEach(clearInterval); S.timers = []; }
@@ -2246,8 +2298,9 @@ function renderLogin() {
 }
 function doLogin() {
   var pin = val('pin').trim(); if (!pin) return;
+  Wait.show('Verificando acesso', ['Conferindo seu PIN…', 'Abrindo a área da equipe…', 'Quase lá…']);
   var probe = { recepcao: 'day', bar: 'orders_queue', admin: 'admin_data' }[S.route];
-  api(probe, {}, pin).then(function () { store.sset('arena_pin', pin); render(); })
+  api(probe, {}, pin).then(function () { store.sset('arena_pin', pin); Wait.hide(); render(); })
     .catch(function (e) { fail(e.code === 'permissao' ? { message: 'Esse PIN não tem acesso a esta área.' } : e); });
 }
 function logout() { store.sdel('arena_pin'); render(); }
@@ -2282,10 +2335,11 @@ var Pay = {
   start: function (method) {
     var o = Pay.ctx, tok = Pay.tok, body = document.getElementById('pay-body');
     body.innerHTML = '<div class="spinner"></div>';
+    Wait.show(method === 'pix' ? 'Gerando seu Pix' : 'Abrindo o pagamento', method === 'pix' ? ['Criando o QR Code…', 'Falando com o banco…', 'Quase lá…'] : ['Preparando o ambiente seguro…', 'Quase lá…']);
     api('start_payment', { ref_type: o.ref_type, ref_id: o.ref_id, method: method, phone: S.me.phone,
       email: S.me.email, return_url: location.origin + location.pathname + '#/jogador/minhas' })
       .then(function (r) {
-        if (!sheetOpen(tok)) return;
+        Wait.hide(); if (!sheetOpen(tok)) return;
         var p = r.payment, h = '';
         if (method === 'pix') {
           var img = p.qr_b64 ? '<img class="qr" alt="QR Code Pix" src="data:image/png;base64,' + p.qr_b64 + '">' : fakeQR(p.qr_code);
@@ -2389,7 +2443,7 @@ var Player = {
           '<span class="chip ' + (free ? 'green' : '') + '">' + (free ? free + ' livres' : 'Lotada') + '</span></div>' +
           (slots.length ? '<div class="slots">' + slots.map(function (s) {
             var promo = s.status === 'livre' && s.promo_pct;
-            return '<button class="slot' + (s.status === 'livre' ? '' : ' off') + (promo ? ' promo' : '') + '" data-act="pslot" data-c="' + ct.court_id + '" data-s="' + s.start + '">' + s.start + '<small>' + brl(s.price).replace(',00', '') + '</small>' + (promo ? '<span class="promo-tag">−' + s.promo_pct + '% agora</span>' : '') + '</button>';
+            return '<button class="slot' + (s.status === 'livre' ? '' : ' off') + (promo ? ' promo' : '') + '" data-act="pslot" data-c="' + ct.court_id + '" data-s="' + s.start + '" aria-label="' + s.start + ' a ' + s.end + '">' + s.start + '<span class="a">a</span>' + s.end + '<small>' + brl(s.price).replace(',00', '') + '</small>' + (promo ? '<span class="promo-tag">−' + s.promo_pct + '% agora</span>' : '') + '</button>';
           }).join('') + '</div>' : '<div class="empty small">Sem horários para esta data.</div>') + '</section>';
       }).join('') || '<div class="empty">Nenhuma quadra ativa.</div>';
     }).catch(function (e) { box.innerHTML = '<div class="empty">' + esc(e.message) + '</div>'; });
@@ -2404,7 +2458,7 @@ var Player = {
     openSheet(sheetHead('Confirmar reserva') +
       '<div class="card" style="background:var(--surface-2);margin-bottom:14px"><div class="kv"><span class="muted">Quadra</span><b>' + esc(ct.name) + '</b></div>' +
       '<div class="kv"><span class="muted">Data</span><b>' + dLong(S.date) + '</b></div>' +
-      '<div class="kv"><span class="muted">Horário</span><b class="mono">' + s.start + ' – ' + s.end + '</b></div>' +
+      '<div class="kv"><span class="muted">Horário</span><b class="mono">' + s.start + ' a ' + s.end + '</b></div>' +
       '<div class="kv"><span class="muted">Valor</span><b class="mono">' + (s.promo_pct ? '<s class="muted" style="font-weight:400">' + brl(s.full) + '</s> ' : '') + brl(s.price) + '</b></div>' +
       (s.promo_pct ? '<div class="kv"><span class="muted">Promoção</span><b style="color:#0B5E00">Última hora −' + s.promo_pct + '%</b></div>' : '') + '</div>' +
       '<div class="field"><label for="f-name">Seu nome</label><input class="input" id="f-name" autocomplete="name" value="' + esc(S.me.name) + '"></div>' +
@@ -2414,10 +2468,11 @@ var Player = {
   },
   doBook: function (btn) {
     var me = { name: val('f-name').trim(), phone: U.normPhone(val('f-phone')), email: val('f-email').trim() || S.me.email };
-    btn.disabled = true;
+    busy(btn);
+    Wait.show('Confirmando sua reserva', ['Guardando seu horário…', 'Salvando no sistema do clube…', 'Quase lá, só mais um instante…']);
     api('create_booking', { court_id: btn.dataset.c, date: S.date, start: btn.dataset.s, duration_min: S.dur, customer_name: me.name, phone: me.phone, email: me.email })
       .then(function (r) {
-        setMe(me);
+        Wait.hide(); setMe(me);
         var b = r.booking;
         if (r.plan.online) {
           Pay.open({ ref_type: 'booking', ref_id: b.booking_id, amount: b.online_amount, title: 'Pagar reserva',
@@ -2425,13 +2480,13 @@ var Player = {
             onPaid: function (x) { Player.bookedOK(x.ref, r.court); } });
         } else Player.bookedOK(b, r.court);
         Player.loadAvail();
-      }).catch(function (e) { btn.disabled = false; fail(e); Player.loadAvail(); });
+      }).catch(function (e) { Wait.hide(); btn.disabled = false; fail(e); Player.loadAvail(); });
   },
   bookedOK: function (b, court) {
     var c = S.boot.config;
-    var msg = encodeURIComponent('Reserva ' + c.club_name + ' ✅\n' + (court ? court.name : '') + '\n' + dLong(b.date) + ' · ' + b.start + '–' + b.end + '\nCódigo: ' + b.code);
+    var msg = encodeURIComponent('Reserva ' + c.club_name + ' ✅\n' + (court ? court.name : '') + '\n' + dLong(b.date) + ' · ' + b.start + ' a ' + b.end + '\nCódigo: ' + b.code);
     openSheet('<div style="text-align:center"><div class="success-mark">' + I.check + '</div><h2 style="font-size:22px">Reserva confirmada</h2>' +
-      '<p class="muted" style="margin:6px 0 16px">' + esc(court ? court.name : '') + ' · ' + dLong(b.date) + '<br><b class="mono" style="color:var(--ink)">' + b.start + ' – ' + b.end + '</b></p>' +
+      '<p class="muted" style="margin:6px 0 16px">' + esc(court ? court.name : '') + ' · ' + dLong(b.date) + '<br><b class="mono" style="color:var(--ink)">' + b.start + ' a ' + b.end + '</b></p>' +
       '<div class="chip green" style="font-size:14px;padding:6px 14px">Código <span class="mono">' + b.code + '</span></div>' +
       (b.payment_status === 'sinal_pago' ? '<p class="small muted" style="margin-top:12px">Sinal pago. Restante na comanda do clube.</p>' : '') +
       '<div class="grid2" style="margin-top:20px"><a class="btn" target="_blank" rel="noopener" href="https://wa.me/?text=' + msg + '">Enviar no WhatsApp</a>' +
@@ -2521,15 +2576,16 @@ var Player = {
   doOrder: function (btn) {
     var me = { name: val('o-name').trim(), phone: U.normPhone(val('o-phone')) };
     var items = Player.cartItems().map(function (x) { return { item_id: x.item.item_id, qty: x.qty }; });
-    btn.disabled = true;
+    busy(btn);
+    Wait.show('Enviando seu pedido', ['Mandando para o bar…', 'Salvando na sua comanda…', 'Quase lá, só mais um instante…']);
     api('create_order', { customer_name: me.name, phone: me.phone, items: items, booking_id: val('o-bk'), location: val('o-loc'), note: val('o-note') })
       .then(function (r) {
-        setMe(me); S.cart = {}; Player.cartBar();
+        Wait.hide(); setMe(me); S.cart = {}; Player.cartBar();
         var o = r.order;
         var ok = function () { toast('Pedido #' + o.code + ' enviado ao bar'); if (S.sub === 'bar') { Player.drawMenu(); Player.loadOrders(); } };
         if (r.plan.online) Pay.open({ ref_type: 'order', ref_id: o.order_id, amount: o.total, title: 'Pagar pedido #' + o.code, expires_at: o.expires_at, onPaid: ok });
         else { closeSheet(); ok(); }
-      }).catch(function (e) { btn.disabled = false; fail(e); });
+      }).catch(function (e) { Wait.hide(); btn.disabled = false; fail(e); });
   },
 
   /* ---------------- minha comanda */
@@ -2711,7 +2767,8 @@ var Recep = {
     q();
   },
   saveNew: function (btn) {
-    btn.disabled = true;
+    busy(btn);
+    Wait.show('Criando reserva', ['Guardando o horário…', 'Salvando no sistema…', 'Quase lá…']);
     api('create_booking', { court_id: val('n-court'), date: S.recepDate, start: val('n-start'), duration_min: Number(val('n-dur')),
       customer_name: val('n-name'), phone: val('n-phone'), notes: val('n-notes'), price_override: val('n-price').replace(',', '.') })
       .then(function () { closeSheet(); toast('Reserva criada'); Recep.load(); })
@@ -2743,7 +2800,7 @@ var Recep = {
   setStatus: function (btn) {
     var s = btn.dataset.s;
     if (s === 'cancelada' && !confirm('Cancelar esta reserva?')) return;
-    btn.disabled = true;
+    busy(btn);
     api('set_booking_status', { booking_id: btn.dataset.id, status: s }).then(function (r) {
       closeSheet(); toast(s === 'cancelada' ? (r.refund_pending ? 'Cancelada · reembolso pendente' : 'Reserva cancelada') : 'Atualizado'); Recep.load();
     }).catch(function (e) { btn.disabled = false; fail(e); });
@@ -2794,11 +2851,13 @@ var Recep = {
   tabLaunch: function (btn) {
     var items = Object.keys(Recep.tabCart).filter(function (k) { return Recep.tabCart[k] > 0; }).map(function (k) { return { item_id: k, qty: Recep.tabCart[k] }; });
     if (!items.length) return toast('Escolha os itens', true);
-    api('create_order', { tab_id: btn.dataset.id, items: items, location: 'Balcão' }).then(function () { toast('Lançado · pedido enviado ao bar'); Recep.load(); Recep.openTab(btn.dataset.id); }).catch(fail);
+    busy(btn);
+    api('create_order', { tab_id: btn.dataset.id, items: items, location: 'Balcão' }).then(function () { toast('Lançado · pedido enviado ao bar'); Recep.load(); Recep.openTab(btn.dataset.id); }).catch(function (e) { btn.disabled = false; fail(e); });
   },
   tabPay: function (btn) {
+    busy(btn);
     api('add_tab_payment', { tab_id: btn.dataset.id, amount: Number(val('t-amount').replace(',', '.')), method: val('t-method') })
-      .then(function () { toast('Pagamento registrado'); Recep.load(); Recep.openTab(btn.dataset.id); }).catch(fail);
+      .then(function () { toast('Pagamento registrado'); Recep.load(); Recep.openTab(btn.dataset.id); }).catch(function (e) { btn.disabled = false; fail(e); });
   },
   tabClose: function (btn) {
     var bal = Number(btn.dataset.bal), amt = Number(val('t-amount').replace(',', '.')) || 0, m = val('t-method');
@@ -2807,6 +2866,7 @@ var Recep = {
       if (amt < bal) return toast('Valor menor que o saldo. Use "Registrar parcial".', true);
       if (!confirm('Valor maior que o saldo (' + brl(bal) + '). Troco de ' + brl(amt - bal) + '. Fechar comanda?')) return;
     }
+    Wait.show('Fechando comanda', ['Registrando o pagamento…', 'Atualizando o caixa…', 'Quase lá…']);
     p.then(function () { return api('close_tab', { tab_id: btn.dataset.id, method: m }); })
       .then(function () { closeSheet(); toast('Comanda fechada'); Recep.load(); }).catch(fail);
   },
@@ -2860,7 +2920,7 @@ var Bar = {
     document.getElementById('b-recent').innerHTML = q.recent.length ? 'Entregues recentemente: ' + q.recent.map(function (o) { return '<span>#' + o.code + ' · ' + esc(o.customer_name) + '</span>'; }).join('') : '';
   },
   setStatus: function (btn, s) {
-    btn.disabled = true;
+    busy(btn);
     api('set_order_status', { order_id: btn.dataset.id, status: s || btn.dataset.s }).then(Bar.load).catch(function (e) { btn.disabled = false; fail(e); });
   },
   beep: function () {
@@ -2891,7 +2951,7 @@ var Admin = {
     Admin['v_' + S.adminTab]();
   },
   saveCfg: function (partial, btn) {
-    if (btn) btn.disabled = true;
+    busy(btn);
     return api('save_config', { config: partial }).then(function (r) {
       Admin.d.config = r.config; toast('Configuração salva');
       return api('bootstrap', {}).then(function (b) { S.boot = b; });
@@ -2909,13 +2969,14 @@ var Admin = {
       var byM = Object.keys(r.received.by_method).map(function (k) { var p = k.split(':'); return { ch: p[0], m: p[1], v: r.received.by_method[k] }; }).sort(function (a, b) { return b.v - a.v; });
       var st = r.bookings.by_status;
       document.getElementById('a-rep').innerHTML = '<div class="kpis">' +
-        '<div class="kpi"><div class="l">Quadras faturado</div><div class="v">' + brl(r.bookings.billed) + '</div><div class="s">' + ((st.confirmada || 0) + (st.checkin || 0) + (st.concluida || 0)) + ' reservas</div></div>' +
+        '<div class="kpi"><div class="l">Quadras reservadas</div><div class="v">' + brl(r.bookings.reserved) + '</div><div class="s">' + r.bookings.reserved_count + (r.bookings.reserved_count === 1 ? ' reserva' : ' reservas') + (r.bookings.to_receive > 0 ? ' · ' + brl(r.bookings.to_receive) + ' a receber' : '') + '</div></div>' +
+        '<div class="kpi"><div class="l">Quadras faturado</div><div class="v">' + brl(r.bookings.billed) + '</div><div class="s">' + r.bookings.paid_count + (r.bookings.paid_count === 1 ? ' reserva paga' : ' reservas pagas') + '</div></div>' +
         '<div class="kpi"><div class="l">Bar faturado</div><div class="v">' + brl(r.bar.billed) + '</div><div class="s">' + r.bar.orders + ' pedidos · ticket ' + brl(r.bar.ticket) + '</div></div>' +
         '<div class="kpi"><div class="l">Recebido</div><div class="v">' + brl(r.received.total) + '</div><div class="s">' + r.open_tabs + ' comanda(s) aberta(s)</div></div>' +
         '<div class="kpi"><div class="l">Ocupação média</div><div class="v">' + occ.toFixed(0) + '%</div><div class="s">' + (st.no_show || 0) + ' no-show · ' + (st.cancelada || 0) + ' cancel.</div></div></div>' +
         (r.pending_refunds ? '<div class="notice" style="margin-bottom:16px"><b>' + r.pending_refunds + ' reembolso(s) pendente(s).</b> Estorne pelo painel do Mercado Pago.</div>' : '') +
-        '<div class="grid2" style="gap:16px;align-items:start"><div class="sect"><h3>Ocupação por quadra</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Quadra</th><th class="num">Horas</th><th>Ocupação</th><th class="num">Faturado</th></tr></thead><tbody>' +
-        r.courts.map(function (c) { return '<tr><td>' + esc(c.name) + '</td><td class="num">' + c.hours + '</td><td><div class="row"><div class="bar-in grow"><i style="width:' + Math.min(100, c.occupancy) + '%"></i></div><span class="mono small">' + c.occupancy.toFixed(0) + '%</span></div></td><td class="num">' + brl(c.revenue) + '</td></tr>'; }).join('') +
+        '<div class="grid2" style="gap:16px;align-items:start"><div class="sect"><h3>Ocupação por quadra</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Quadra</th><th class="num">Horas</th><th>Ocupação</th><th class="num">Reservado</th><th class="num">Faturado</th></tr></thead><tbody>' +
+        r.courts.map(function (c) { return '<tr><td>' + esc(c.name) + '</td><td class="num">' + c.hours + '</td><td><div class="row"><div class="bar-in grow"><i style="width:' + Math.min(100, c.occupancy) + '%"></i></div><span class="mono small">' + c.occupancy.toFixed(0) + '%</span></div></td><td class="num">' + brl(c.reserved) + '</td><td class="num">' + brl(c.billed) + '</td></tr>'; }).join('') +
         '</tbody></table></div></div>' +
         '<div class="sect"><h3>Recebido por forma</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Forma</th><th>Canal</th><th class="num">Valor</th></tr></thead><tbody>' +
         (byM.length ? byM.map(function (x) { return '<tr><td>' + (ML[x.m] || x.m) + '</td><td>' + (x.ch === 'online' ? '<span class="chip blue">App</span>' : '<span class="chip">Balcão</span>') + '</td><td class="num">' + brl(x.v) + '</td></tr>'; }).join('') : '<tr><td colspan="3" class="muted">Nada recebido no período.</td></tr>') +
@@ -2995,7 +3056,7 @@ var Admin = {
       return { rule_id: tr.dataset.id, label: g('label').value, court_id: tgt.indexOf('c:') === 0 ? tgt.slice(2) : '*', env: tgt.indexOf('e:') === 0 ? tgt.slice(2) : '*',
         weekdays: days.length === 7 ? '' : days.join(','), start: g('start').value.trim(), end: g('end').value.trim(), price_hour: Number(g('price_hour').value), active: g('active').checked };
     });
-    btn.disabled = true;
+    busy(btn);
     api('save_price_rules', { rows: rows }).then(function (r) {
       Admin.d.price_rules = r.price_rules;
       return Admin.saveCfg({ open_time: val('h-open'), close_time: val('h-close'), slot_step_min: Number(val('h-step')), booking_window_days: Number(val('h-win')),
@@ -3022,7 +3083,7 @@ var Admin = {
       var g = function (f) { return tr.querySelector('[data-f="' + f + '"]'); };
       return { court_id: tr.dataset.id, name: g('name').value.trim(), sport: g('sport').value, env: g('env').value, surface: g('surface').value, sort: Number(g('sort').value), active: g('active').checked };
     });
-    btn.disabled = true;
+    busy(btn);
     api('save_courts', { rows: rows }).then(function (r) { Admin.d.courts = r.courts; toast('Quadras salvas'); return api('bootstrap', {}).then(function (b) { S.boot = b; Admin.show(); }); })
       .catch(fail).then(function () { btn.disabled = false; });
   },
@@ -3052,7 +3113,7 @@ var Admin = {
       var g = function (f) { return tr.querySelector('[data-f="' + f + '"]'); };
       return { item_id: tr.dataset.id, category: g('category').value.trim(), name: g('name').value.trim(), description: g('description').value.trim(), price: Number(g('price').value), sort: Number(g('sort').value), active: g('active').checked };
     }).filter(function (r) { return r.name; });
-    btn.disabled = true;
+    busy(btn);
     api('save_menu', { rows: rows }).then(function (r) { Admin.d.menu = r.menu; toast('Cardápio salvo'); return api('bootstrap', {}).then(function (b) { S.boot = b; }); })
       .catch(fail).then(function () { btn.disabled = false; });
   },
@@ -3296,7 +3357,7 @@ var Cat = {
       if (sel[i].price === null || isNaN(sel[i].price)) return toast('Informe o preço de ' + sel[i].name, true);
       if (sel[i].category === '__nova') return toast('Escolha a categoria de ' + sel[i].name, true);
     }
-    btn.disabled = true;
+    busy(btn);
     var withPhoto = st.photo && st.items.length === 1;
     var up = withPhoto ? api('upload_image', { b64: st.photo.b64, mime: st.photo.mime, name: sel[0].name }) : Promise.resolve(null);
     up.then(function (img) {
@@ -3310,7 +3371,7 @@ var Cat = {
     }).catch(function (e) { btn.disabled = false; fail(e); });
   },
   photoExisting: function (id, btn) {
-    btn.disabled = true;
+    busy(btn);
     api('upload_image', { b64: Cat.st.photo.b64, mime: Cat.st.photo.mime, item_id: id, name: id })
       .then(function () { closeSheet(); toast('Foto atualizada'); Cat.refresh(); }).catch(function (e) { btn.disabled = false; fail(e); });
   },
@@ -3529,7 +3590,7 @@ var Pz = {
   save: function (btn) {
     Pz.readInputs();
     try { PEArena.pricing.validate(Pz.draft, { slot_step_min: Pz.d.slot_step_min }); } catch (e) { return fail(e); }
-    btn.disabled = true;
+    busy(btn);
     api('save_pricing', { model: Pz.draft }).then(function (r) { toast('Preços publicados · ' + r.rules + ' regras'); Pz.load(); })
       .catch(fail).then(function () { btn.disabled = false; });
   },
@@ -3599,7 +3660,7 @@ var Pz = {
   },
   doImport: function (btn) {
     var courts = {}; document.querySelectorAll('[data-pzhc]').forEach(function (el) { courts[el.dataset.pzhc] = Number(el.value) || 0; });
-    btn.disabled = true;
+    busy(btn);
     api('import_history', { rows: Pz.pending, batch: val('pz-batch'), replace: document.getElementById('pz-replace').checked, courts: courts })
       .then(function (r) { toast(r.imported + ' jogos importados' + (r.skipped ? ' · ' + r.skipped + ' ignorados' : '')); Pz.src = 'combinado'; Pz.load(); })
       .catch(function (e) { btn.disabled = false; fail(e); });
@@ -3648,7 +3709,8 @@ var H = {
   mswap: function () { setMe({ phone: '' }); Player.render(); },
   mcancel: function (el) {
     if (!confirm('Cancelar esta reserva?')) return;
-    api('cancel_booking', { booking_id: el.dataset.id, phone: S.me.phone }).then(function (r) { toast(r.refund_pending ? 'Cancelada. O reembolso será feito pelo clube.' : 'Reserva cancelada'); Player.loadMine(); }).catch(fail);
+    Wait.show('Cancelando reserva', ['Liberando o horário…', 'Quase lá…']);
+    api('cancel_booking', { booking_id: el.dataset.id, phone: S.me.phone }).then(function (r) { Wait.hide(); toast(r.refund_pending ? 'Cancelada. O reembolso será feito pelo clube.' : 'Reserva cancelada'); Player.loadMine(); }).catch(fail);
   },
   'pay-booking': function (el) {
     var x = Player.mineList.filter(function (y) { return y.booking.booking_id === el.dataset.id; })[0]; if (!x) return;
@@ -3669,7 +3731,7 @@ var H = {
   'pay-method': function (el) { Pay.start(el.dataset.m); },
   'pay-back': function () { var o = Pay.ctx; closeSheet(); Pay.open(o); },
   'copy-pix': function () { var i = document.getElementById('pix-code'); i.select(); try { navigator.clipboard.writeText(i.value); } catch (e) { document.execCommand('copy'); } toast('Código Pix copiado'); },
-  'demo-approve': function (el) { el.disabled = true; api('demo_approve_payment', { payment_id: el.dataset.id }).then(function (r) { if (r.payment.status === 'aprovado') Pay.done(r); }).catch(fail); },
+  'demo-approve': function (el) { busy(el); api('demo_approve_payment', { payment_id: el.dataset.id }).then(function (r) { if (r.payment.status === 'aprovado') Pay.done(r); }).catch(fail); },
   'demo-card': function (el, e) { e.preventDefault(); toast('Demo: no app real abre o checkout do Mercado Pago. Use “Simular pagamento aprovado”.'); },
   // recepção
   rday: function (el) { S.recepDate = U.addDays(S.recepDate, Number(el.dataset.d)); Recep.load(); },
@@ -3715,7 +3777,7 @@ var H = {
   catsave: function (el) { Cat.save(el); },
   'catphoto-existing': function (el) { Cat.photoExisting(el.dataset.id, el); },
   'catprice-existing': function (el) {
-    el.disabled = true;
+    busy(el);
     api('update_menu_item', { item_id: el.dataset.id, price: Number(el.dataset.v) }).then(function (r) {
       toast(r.item.name + ': ' + brl(r.item.price));
       var x = Cat.st.items[Number(el.dataset.i)]; if (x && x.match) x.match.price = r.item.price;
