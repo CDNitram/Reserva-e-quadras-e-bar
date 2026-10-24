@@ -190,6 +190,8 @@ body:before{content:"";position:fixed;left:0;right:0;top:0;height:3px;background
 .bkb{position:absolute;left:4px;right:4px;border-radius:9px;padding:5px 8px;font-size:12px;overflow:hidden;cursor:pointer;border-left:4px solid;box-shadow:0 1px 2px rgba(0,0,0,.05);z-index:2}
 .bkb b{display:block;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bkb .mono{display:block;line-height:1.3}
+.aula-tag{display:inline-block;font:800 9px var(--f-body);letter-spacing:.06em;background:var(--blue);color:#fff;border-radius:4px;padding:1px 4px;margin-right:4px;vertical-align:1px}
+.kind-seg{display:flex;width:100%}.kind-seg button{flex:1}
 .bkb.confirmada{background:var(--accent-soft);border-color:var(--accent)}
 .bkb.pendente_pagamento{background:var(--amber-soft);border-color:#D39A2C}
 .bkb.checkin{background:var(--blue-soft);border-color:var(--blue)}
@@ -234,7 +236,26 @@ body:before{content:"";position:fixed;left:0;right:0;top:0;height:3px;background
 .anav{background:var(--surface);border-right:1px solid var(--line);padding:14px 10px}
 .anav button{display:block;width:100%;text-align:left;border:0;background:transparent;padding:10px 12px;border-radius:10px;font-weight:600;color:var(--ink-2)}
 .anav button.on{background:var(--accent-soft);color:var(--accent-2)}
-.amain{padding:22px 24px;max-width:1100px}
+.amain{padding:22px 24px;max-width:1320px}
+.ov{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:18px 16px;align-items:start}
+.ov .sect{margin:0;min-width:0}.ov .c7{grid-column:span 7}.ov .c5{grid-column:span 5}.ov .c4{grid-column:span 4}
+@media(max-width:1180px){.ov .c7,.ov .c5{grid-column:span 12}.ov .c4{grid-column:span 6}}
+@media(max-width:700px){.ov .c4{grid-column:span 12}.ov .tbl td,.ov .tbl th{white-space:nowrap}.kpi .v{font-size:28px}}
+.sect-h{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 10px;flex-wrap:wrap}.sect-h h3{margin:0}
+.ag-sum{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px}
+.ag-scroll .tbl-wrap{max-height:380px;overflow:auto}
+.tbl tr.now td{background:var(--accent-soft)}.tbl tr.past td{color:var(--muted)}.tbl tr.past .chip{opacity:.7}
+.kind-card{padding:16px}.kindbar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--gray-soft);margin-bottom:6px}.kindbar i{display:block;height:100%}
+.kind-row{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}.kind-row:last-child{border-bottom:0}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block}
+.pe-tag{font:700 10px var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 6px;vertical-align:2px;margin-left:4px}
+.pe-card{padding:14px 16px}.pe-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px}@media(max-width:640px){.pe-cols{grid-template-columns:1fr}}
+.pe-sub{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+.tlist{list-style:none;margin:0;padding:0}.tlist li{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}.tlist li:last-child{border-bottom:0}
+.t-date{width:42px;flex:none;text-align:center;border-radius:10px;background:var(--gray-soft);padding:4px 0;line-height:1.05}.t-date b{display:block;font-size:17px}.t-date span{font-size:10px;text-transform:uppercase;color:var(--muted);font-weight:700}
+.tlist li.up .t-date{background:var(--accent-soft);color:var(--accent-2)}.t-name{font-weight:600;font-size:14px;line-height:1.25}
+.tbl.rank td.rk{width:30px;text-align:center;font-size:16px}.pe-empty p{margin:6px 0 0}
+.seg.sm button{padding:5px 10px;font-size:12px}
 .amain h2{font-size:22px;font-weight:700;margin-bottom:4px}
 .amain .lead{color:var(--muted);margin:0 0 18px}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(148px,1fr));gap:12px;margin-bottom:18px}
@@ -349,7 +370,7 @@ body:before{content:"";position:fixed;left:0;right:0;top:0;height:3px;background
 var PEArena = (function () {
   'use strict';
 
-  var VERSION = 'ARENA_V2.2';
+  var VERSION = 'ARENA_V2.4';
 
   /* ------------------------------------------------------------------ schema */
   // Tipos: s=string, n=number, b=boolean, j=json
@@ -363,7 +384,7 @@ var PEArena = (function () {
       booking_id: 's', code: 's', court_id: 's', date: 's', start: 's', end: 's', duration_min: 'n',
       customer_name: 's', phone: 's', email: 's', status: 's', price: 'n', online_amount: 'n',
       pay_mode: 's', payment_status: 's', tab_id: 's', source: 's', notes: 's', expires_at: 's',
-      created_at: 's', updated_at: 's' } },
+      created_at: 's', updated_at: 's', kind: 's' } },
     blocks: { key: 'block_id', fields: {
       block_id: 's', court_id: 's', date: 's', start: 's', end: 's', reason: 's', created_at: 's' } },
     menu: { key: 'item_id', fields: {
@@ -495,6 +516,46 @@ var PEArena = (function () {
     }
     return str(v);
   }
+  // tipo de reserva: jogo livre (padrão) ou aula
+  var BOOKING_KINDS = { jogo: 'Jogo livre', aula: 'Aula' };
+  function bookingKind(v) { v = str(v).toLowerCase(); return BOOKING_KINDS[v] ? v : 'jogo'; }
+
+  // PadelEye: datas vêm como "2026-05-15", "15/05/2026" ou "15 de mai. de 2026"
+  var PT_MONTHS = { jan: 1, fev: 2, mar: 3, abr: 4, mai: 5, jun: 6, jul: 7, ago: 8, set: 9, out: 10, nov: 11, dez: 12 };
+  function looseDate(v) {
+    v = str(v).trim().toLowerCase(); var m;
+    if ((m = v.match(/^(\d{4})-(\d{2})-(\d{2})/))) return m[1] + '-' + m[2] + '-' + m[3];
+    if ((m = v.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/))) return m[3] + '-' + pad(Number(m[2])) + '-' + pad(Number(m[1]));
+    if ((m = v.match(/^(\d{1,2})\s+de\s+([a-zç]{3})[a-zç]*\.?\s+de\s+(\d{4})/))) { var mo = PT_MONTHS[m[2]]; if (mo) return m[3] + '-' + pad(mo) + '-' + pad(Number(m[1])); }
+    return '';
+  }
+  function num(v) { var n = Number(String(v === undefined || v === null ? '' : v).replace('%', '').replace(',', '.')); return isFinite(n) ? n : 0; }
+  // monta o painel PadelEye a partir das abas Tournaments / Ranking_Tournaments / Ranking_Sessions
+  function padelEyeBoard(raw, today) {
+    raw = raw || {};
+    var ts = (raw.tournaments || []).map(function (t) {
+      var st = str(t.status).toLowerCase();
+      return { id: str(t.tournament_id), name: str(t.tournament_name) || 'Torneio', date: looseDate(t.date), venue: str(t.venue),
+        category: str(t.tournament_category), format: str(t.tournament_format), status: st, finished: /finaliz|encerr|conclu/.test(st) };
+    }).filter(function (t) { return t.date; });
+    var past = ts.filter(function (t) { return t.finished || t.date < today; })
+      .sort(function (a, b) { return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; }).slice(0, 5);
+    var next = ts.filter(function (t) { return !t.finished && t.date >= today; })
+      .sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; }).slice(0, 5);
+    var rank = (raw.ranking_tournaments || []).map(function (r) {
+      return { player: str(r.player), pts: num(r.pts_total), titles: num(r.tournament_titles), runner_up: num(r.tournament_runner_up || r.tournament_runners_up || r.tournament_runnerup),
+        tournaments: num(r.tournament_qty), best: str(r.best_phase_achieved) };
+    }).filter(function (r) { return r.player && r.pts > 0; })
+      .sort(function (a, b) { return b.pts - a.pts || b.titles - a.titles || a.player.localeCompare(b.player); }).slice(0, 10);
+    var sess = (raw.ranking_sessions || []).map(function (r) {
+      var m = num(r.matches), w = num(r.wins);
+      return { player: str(r.player), sessions: num(r.sessions), matches: m, wins: w, win_rate: m ? round2(w / m * 100) : 0,
+        diff: num(r.points_difference), mvp: num(r.mvp_count) };
+    }).filter(function (r) { return r.player && r.matches >= 10; })
+      .sort(function (a, b) { return b.win_rate - a.win_rate || b.diff - a.diff; }).slice(0, 10);
+    return { past: past, next: next, ranking: rank, session_ranking: sess };
+  }
+
   function normalizeRow(table, obj) {
     var def = TABLES[table]; if (!def) return obj;
     var out = {};
@@ -1207,7 +1268,7 @@ var PEArena = (function () {
           source: isStaff ? 'recepcao' : 'app',
           notes: [String(p.notes || ''), !override && fp.promo_pct ? 'última hora −' + fp.promo_pct + '%' : ''].filter(Boolean).join(' · '),
           expires_at: plan.online ? iso(ms + c.payment_hold_min * 60000) : '',
-          created_at: iso(ms), updated_at: iso(ms)
+          created_at: iso(ms), updated_at: iso(ms), kind: bookingKind(p.kind)
         };
         d.bookings.push(b); save('bookings', b);
         if (!plan.online) ensureBookingTab(d, b);
@@ -1893,6 +1954,44 @@ var PEArena = (function () {
           reserved: sum(mine, function (b) { return b.price; }), billed: sum(mine, paidOf), revenue: sum(mine, function (b) { return b.price; }) };
       });
       var hours = {}; live.forEach(function (b) { hours[b.start] = (hours[b.start] || 0) + 1; });
+      // por tipo de reserva (jogo livre × aula)
+      var byKind = {}; Object.keys(BOOKING_KINDS).forEach(function (k) { byKind[k] = { kind: k, label: BOOKING_KINDS[k], count: 0, hours: 0, value: 0 }; });
+      held.forEach(function (b) { var k = byKind[bookingKind(b.kind)]; k.count++; k.hours = round2(k.hours + b.duration_min / 60); k.value = round2(k.value + b.price); });
+      // clientes com maior consumo: quadras (reservadas) + bar no período, agrupado pelo celular
+      var cust = {};
+      var who = function (phone, name) {
+        var k = normPhone(phone) || ('nome:' + str(name).trim().toLowerCase()); if (k === 'nome:') return null;
+        if (!cust[k]) cust[k] = { name: str(name).trim() || 'Cliente', phone: normPhone(phone), bookings: 0, orders: 0, courts: 0, bar: 0, total: 0 };
+        if (str(name).trim() && cust[k].name === 'Cliente') cust[k].name = str(name).trim();
+        return cust[k];
+      };
+      held.forEach(function (b) { var c0 = who(b.phone, b.customer_name); if (c0) { c0.bookings++; c0.courts = round2(c0.courts + b.price); } });
+      ords.forEach(function (o) { var c0 = who(o.phone, o.customer_name); if (c0) { c0.orders++; c0.bar = round2(c0.bar + o.total); } });
+      var topCustomers = Object.keys(cust).map(function (k) { var x = cust[k]; x.total = round2(x.courts + x.bar); return x; })
+        .filter(function (x) { return x.total > 0; })
+        .sort(function (a, b) { return b.total - a.total || b.bookings - a.bookings; }).slice(0, 8);
+      // agenda de hoje (independe do período escolhido)
+      var courtName = {}; d.courts.forEach(function (x) { courtName[x.court_id] = x.name; });
+      var nowLocal = local(nowMs, c.tz_offset_min), nowHHMM = nowLocal.hhmm || toHHMM(nowLocal.min || 0);
+      var todays = d.bookings.filter(function (b) {
+        if (b.date !== today) return false;
+        if (b.status === 'pendente_pagamento') return !(b.expires_at && Date.parse(b.expires_at) <= nowMs);
+        return ['confirmada', 'checkin', 'concluida', 'no_show'].indexOf(b.status) >= 0;
+      }).sort(function (a, b) { return a.start < b.start ? -1 : a.start > b.start ? 1 : (courtName[a.court_id] || '') < (courtName[b.court_id] || '') ? -1 : 1; });
+      var activeCourts = d.courts.filter(function (x) { return x.active; }).length;
+      var dayMin = (toMin(c.close_time) - toMin(c.open_time)) * activeCourts;
+      var todayMin = todays.filter(function (b) { return b.status !== 'no_show'; }).reduce(function (acc, b) { return acc + b.duration_min; }, 0);
+      var agenda = {
+        date: today, now: nowHHMM, count: todays.length, hours: round2(todayMin / 60),
+        occupancy: dayMin ? round2(todayMin / dayMin * 100) : 0,
+        value: sum(todays, function (b) { return b.price; }), to_receive: round2(sum(todays, function (b) { return b.price; }) - sum(todays, paidOf)),
+        aulas: todays.filter(function (b) { return bookingKind(b.kind) === 'aula'; }).length,
+        items: todays.map(function (b) {
+          return { booking_id: b.booking_id, start: b.start, end: b.end, court: courtName[b.court_id] || b.court_id, customer_name: b.customer_name,
+            phone: b.phone, kind: bookingKind(b.kind), status: b.status, payment_status: b.payment_status, price: b.price,
+            past: b.end <= nowHHMM, now: b.start <= nowHHMM && b.end > nowHHMM };
+        })
+      };
       return {
         from: from, to: to, days: days,
         bookings: { total: bks.length, by_status: byStatus,
@@ -1903,12 +2002,21 @@ var PEArena = (function () {
           ticket: ords.length ? round2(ords.reduce(function (s, o) { return s + o.total; }, 0) / ords.length) : 0,
           top_items: Object.keys(items).map(function (k) { return items[k]; }).sort(function (a, b) { return b.revenue - a.revenue; }).slice(0, 10) },
         received: { total: round2(pays.reduce(function (s, x) { return s + x.amount; }, 0)), by_method: byMethod },
-        courts: courts,
+        courts: courts, by_kind: Object.keys(byKind).map(function (k) { return byKind[k]; }), top_customers: topCustomers, agenda: agenda,
         peak_starts: Object.keys(hours).map(function (h) { return { start: h, n: hours[h] }; }).sort(function (a, b) { return b.n - a.n; }).slice(0, 6),
         pending_refunds: d.bookings.filter(function (b) { return b.payment_status === 'reembolso_pendente'; }).length +
           d.orders.filter(function (o) { return o.payment_status === 'reembolso_pendente'; }).length,
         open_tabs: d.tabs.filter(function (t) { return t.status === 'aberta'; }).length
       };
+    };
+
+    // ranking e torneios do PadelEye (somente leitura; outra planilha)
+    A.padeleye_board = function () {
+      var c = cfg(), today = local(nowFn(), c.tz_offset_min).date;
+      if (!deps.padeleye || !deps.padeleye.ready) return { configured: false, past: [], next: [], ranking: [], session_ranking: [] };
+      var raw = deps.padeleye.read();
+      var out = padelEyeBoard(raw, today); out.configured = true; out.updated_at = raw.updated_at || '';
+      return out;
     };
 
     /* ------------------------------------------------------------ ACL */
@@ -1918,7 +2026,7 @@ var PEArena = (function () {
       bar: ['orders_queue', 'set_order_status'],
       recepcao: ['orders_queue', 'set_order_status', 'day', 'quote', 'set_booking_status', 'move_booking', 'add_block',
         'remove_block', 'tabs', 'open_tab', 'add_tab_payment', 'close_tab', 'reconcile'],
-      admin: ['admin_data', 'save_config', 'save_courts', 'save_menu', 'save_price_rules', 'report', 'pricing_panel', 'save_pricing', 'import_history', 'clear_history',
+      admin: ['admin_data', 'save_config', 'save_courts', 'save_menu', 'save_price_rules', 'report', 'padeleye_board', 'pricing_panel', 'save_pricing', 'import_history', 'clear_history',
         'upload_image', 'recognize_items', 'lookup_barcode', 'add_menu_items', 'update_menu_item']
     };
     function allowed(role, action) {
@@ -1979,7 +2087,7 @@ var PEArena = (function () {
     pricing: { DEFAULT: DEFAULT_PRICING, model: pricingModel, cellPrice: cellPrice, groupAt: groupAt, groupDays: groupDays,
       validate: validatePricing, rules: rulesFromPricing, suggest: suggest, envList: envList, roundTo: roundTo,
       parseHistory: parseHistoryRows, priorAdj: priorAdj },
-    catalog: CATALOG,
+    catalog: CATALOG, BOOKING_KINDS: BOOKING_KINDS, padelEyeBoard: padelEyeBoard, looseDate: looseDate,
     util: { toMin: toMin, toHHMM: toHHMM, addDays: addDays, weekday: weekday, local: local, epochOf: epochOf,
       normPhone: normPhone, round2: round2, newId: newId, iso: iso, overlaps: overlaps }
   };
@@ -2069,7 +2177,7 @@ function setupLocal() {
   var cr = prov.create; prov.create = function (r) { var x = cr(r); store.set(PKEY, prov.state); return x; };
   var media = { save: function (f) { return { id: 'LOCAL_' + Date.now().toString(36), url: 'data:' + f.mime + ';base64,' + f.b64 }; }, remove: function () {} };
   var lookup = { barcode: function (code) { return DemoVision.offCache[code] || null; } };
-  var svc = PEArena.Service({ repo: repo, provider: prov, media: media, lookup: lookup, roleOf: function (pin) { return { '9999': 'admin', '1111': 'recepcao', '2222': 'bar' }[pin] || null; } });
+  var svc = PEArena.Service({ repo: repo, provider: prov, media: media, lookup: lookup, padeleye: { ready: true, read: demoPadelEye }, roleOf: function (pin) { return { '9999': 'admin', '1111': 'recepcao', '2222': 'bar' }[pin] || null; } });
   if (!saved) seedDemo(repo, svc);
   local = { svc: svc, reset: function () { store.del(KEY); store.del(PKEY); location.reload(); } };
 }
@@ -2102,6 +2210,28 @@ function demoHistory(today) {
   }
   return rows;
 }
+// PadelEye fictício para o modo demo (no real, vem da planilha do PadelEye via setPadelEyeSheet)
+function demoPadelEye() {
+  var t = U.local(Date.now(), -180).date, d = function (n) { return U.addDays(t, n); };
+  var tn = function (id, name, date, cat, st) { return { tournament_id: id, tournament_name: name, date: date, venue: 'EcoTenis', tournament_format: 'Americano', tournament_category: cat, status: st }; };
+  return {
+    tournaments: [
+      tn('T1', 'Americano Verão', d(-63), '6a', 'finalizado'), tn('T2', 'Copa EcoTenis', d(-49), '7a', 'finalizado'),
+      tn('T3', 'Americano Noturno', d(-35), '5a', 'finalizado'), tn('T4', 'Desafio de Duplas', d(-21), '8a', 'finalizado'),
+      tn('T5', 'Americano da Primavera', d(-7), '6a', 'finalizado'), tn('T6', 'Torneio Relâmpago', d(-77), '7a', 'finalizado'),
+      tn('T7', 'Americano de Outubro', d(6), '6a', 'aberto'), tn('T8', 'Copa Feminina', d(13), '7a', 'aberto'),
+      tn('T9', 'Americano Mix', d(20), '5a', 'aberto'), tn('T10', 'Desafio Iniciantes', d(34), '8a', 'aberto')
+    ],
+    ranking_tournaments: [['André Souza', 3, 2, 1, 860], ['Bruno Costa', 3, 1, 1, 640], ['Caio Martins', 2, 1, 0, 520], ['Diego Rocha', 3, 0, 2, 470],
+      ['Eduardo Lima', 2, 0, 1, 330], ['Felipe Ramos', 2, 0, 0, 220], ['Gustavo Pires', 1, 0, 0, 110], ['Henrique Dias', 1, 0, 0, 100],
+      ['Igor Teixeira', 1, 0, 0, 20], ['João Moreira', 1, 0, 0, 10]]
+      .map(function (r) { return { player: r[0], tournament_qty: r[1], tournament_titles: r[2], tournament_runner_up: r[3], pts_total: r[4] }; }),
+    ranking_sessions: [['Bruno Costa', 9, 52, 40, 88, 2], ['André Souza', 8, 44, 32, 61, 3], ['Diego Rocha', 7, 38, 26, 35, 1], ['Caio Martins', 6, 31, 20, 22, 0],
+      ['Eduardo Lima', 5, 27, 15, 9, 1], ['Felipe Ramos', 4, 22, 11, -4, 0]]
+      .map(function (r) { return { player: r[0], sessions: r[1], matches: r[2], wins: r[3], points_difference: r[4], mvp_count: r[5] }; }),
+    updated_at: new Date().toISOString()
+  };
+}
 function seedDemo(repo, svc) {
   repo.replaceAll('config', PEArena.configToRows(PEArena.parseConfig([])));
   ['courts', 'price_rules', 'menu'].forEach(function (t) {
@@ -2110,8 +2240,8 @@ function seedDemo(repo, svc) {
   var P = '1111', today = svc.handle('bootstrap', {}).data.config.today, tm = U.addDays(today, 1);
   svc.handle('import_history', { rows: demoHistory(today), batch: 'Exemplo — dados fictícios (12 semanas)', courts: { Indoor: 2, Outdoor: 1 } }, '9999');
   var nowMin = U.local(Date.now(), -180).min;
-  function mk(court, date, start, dur, name, phone) {
-    var r = svc.handle('create_booking', { court_id: court, date: date, start: start, duration_min: dur, customer_name: name, phone: phone }, P);
+  function mk(court, date, start, dur, name, phone, kind) {
+    var r = svc.handle('create_booking', { court_id: court, date: date, start: start, duration_min: dur, customer_name: name, phone: phone, kind: kind || 'jogo' }, P);
     if (!r.ok) return null;
     var b = r.data.booking, s = U.toMin(start);
     if (date === today && s + dur <= nowMin) { svc.handle('set_booking_status', { booking_id: b.booking_id, status: 'checkin' }, P); svc.handle('set_booking_status', { booking_id: b.booking_id, status: 'concluida' }, P); }
@@ -2120,11 +2250,12 @@ function seedDemo(repo, svc) {
   }
   var cur = Math.max(7 * 60, Math.min(20 * 60, Math.floor(nowMin / 30) * 30 - 30));
   var b1 = mk('CRT_IND1', today, U.toHHMM(cur), 90, 'Rafael Lima', '45999110022');
-  mk('CRT_IND2', today, U.toHHMM(Math.min(cur + 60, 21 * 60)), 90, 'Júlia Andrade', '45998220033');
+  mk('CRT_IND2', today, U.toHHMM(Math.min(cur + 60, 21 * 60)), 90, 'Júlia Andrade', '45998220033', 'aula');
   mk('CRT_IND1', today, U.toHHMM(Math.min(cur + 120, 21 * 60 + 30)), 60, 'Marcos Pereira', '45997330044');
   mk('CRT_OUT1', today, U.toHHMM(Math.max(7 * 60, cur - 120)), 60, 'Beatriz Nunes', '45996440055');
   mk('CRT_IND2', tm, '18:00', 90, 'Pedro Alves', '45995550066');
-  mk('CRT_IND1', tm, '19:30', 90, 'Carla Mendes', '45994660077');
+  mk('CRT_IND1', tm, '19:30', 90, 'Carla Mendes', '45994660077', 'aula');
+  mk('CRT_OUT1', today, U.toHHMM(Math.min(cur + 90, 21 * 60)), 60, 'Prof. Ricardo · turma', '45992880099', 'aula');
   svc.handle('add_block', { court_id: 'CRT_OUT1', date: tm, start: '07:00', end: '10:00', reason: 'Manutenção da grama' }, P);
   if (b1) {
     var tab = b1.tab_id;
@@ -2167,6 +2298,12 @@ function dShort(d) { var p = dParts(d); return (p.d < 10 ? '0' : '') + p.d + '/'
 function fmtPhone(p) { p = U.normPhone(p); return p.length === 11 ? '(' + p.slice(0, 2) + ') ' + p.slice(2, 7) + '-' + p.slice(7) : p.length === 10 ? '(' + p.slice(0, 2) + ') ' + p.slice(2, 6) + '-' + p.slice(6) : p; }
 function nowLocal() { return U.local(Date.now(), S.boot ? S.boot.config.tz_offset_min : -180); }
 function minsAgo(iso) { return Math.max(0, Math.floor((Date.now() - Date.parse(iso)) / 60000)); }
+var KIND_COLOR = { jogo: 'var(--accent)', aula: 'var(--blue)' };
+var MON = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez'];
+function kindOf(id) { var b = document.querySelector('#' + id + ' button.on'); return b ? b.dataset.v : 'jogo'; }
+function kindChip(k) { return k === 'aula' ? '<span class="chip blue">Aula</span>' : '<span class="chip">Jogo livre</span>'; }
+function fmtH(h) { var m = Math.round(h * 60); return Math.floor(m / 60) + 'h' + (m % 60 ? String(m % 60).padStart(2, '0') : ''); }
+function daysBetween(a, b) { return Math.round((Date.parse(b + 'T12:00:00Z') - Date.parse(a + 'T12:00:00Z')) / 86400000); }
 var BK = { pendente_pagamento: ['Aguardando pagamento', 'amber'], confirmada: ['Confirmada', 'green'], checkin: ['Em quadra', 'blue'],
   concluida: ['Concluída', ''], no_show: ['Não compareceu', 'red'], cancelada: ['Cancelada', ''] };
 var PS = { pendente: ['Pagamento pendente', 'amber'], pago: ['Pago', 'green'], sinal_pago: ['Sinal pago', 'green'], na_comanda: ['Paga no clube', ''],
@@ -2461,6 +2598,7 @@ var Player = {
       '<div class="kv"><span class="muted">Horário</span><b class="mono">' + s.start + ' a ' + s.end + '</b></div>' +
       '<div class="kv"><span class="muted">Valor</span><b class="mono">' + (s.promo_pct ? '<s class="muted" style="font-weight:400">' + brl(s.full) + '</s> ' : '') + brl(s.price) + '</b></div>' +
       (s.promo_pct ? '<div class="kv"><span class="muted">Promoção</span><b style="color:#0B5E00">Última hora −' + s.promo_pct + '%</b></div>' : '') + '</div>' +
+      '<div class="field"><label>Tipo de reserva</label><div class="seg kind-seg" id="f-kind">' + [['jogo', 'Jogo livre'], ['aula', 'Aula']].map(function (k, i) { return '<button type="button" class="' + (i ? '' : 'on') + '" data-act="kindpick" data-v="' + k[0] + '">' + k[1] + '</button>'; }).join('') + '</div></div>' +
       '<div class="field"><label for="f-name">Seu nome</label><input class="input" id="f-name" autocomplete="name" value="' + esc(S.me.name) + '"></div>' +
       '<div class="field"><label for="f-phone">Celular (WhatsApp)</label><input class="input" id="f-phone" inputmode="tel" autocomplete="tel" placeholder="(45) 99999-9999" value="' + esc(fmtPhone(S.me.phone)) + '"></div>' +
       (plan.online ? '<div class="field"><label for="f-email">E-mail <span class="muted" style="text-transform:none">(recibo do pagamento)</span></label><input class="input" id="f-email" type="email" autocomplete="email" value="' + esc(S.me.email) + '"></div>' : '') +
@@ -2470,7 +2608,7 @@ var Player = {
     var me = { name: val('f-name').trim(), phone: U.normPhone(val('f-phone')), email: val('f-email').trim() || S.me.email };
     busy(btn);
     Wait.show('Confirmando sua reserva', ['Guardando seu horário…', 'Salvando no sistema do clube…', 'Quase lá, só mais um instante…']);
-    api('create_booking', { court_id: btn.dataset.c, date: S.date, start: btn.dataset.s, duration_min: S.dur, customer_name: me.name, phone: me.phone, email: me.email })
+    api('create_booking', { court_id: btn.dataset.c, date: S.date, start: btn.dataset.s, duration_min: S.dur, customer_name: me.name, phone: me.phone, email: me.email, kind: kindOf('f-kind') })
       .then(function (r) {
         Wait.hide(); setMe(me);
         var b = r.booking;
@@ -2723,7 +2861,7 @@ var Recep = {
       });
       live.filter(function (b) { return b.court_id === c.court_id; }).forEach(function (b) {
         var top = (U.toMin(b.start) - open) / step * ROW_H, ht = b.duration_min / step * ROW_H;
-        h += '<div class="bkb ' + b.status + '" style="top:' + (top + 1) + 'px;height:' + (ht - 3) + 'px" data-act="rbk" data-id="' + b.booking_id + '"><b>' + esc(b.customer_name) + '</b>' +
+        h += '<div class="bkb ' + b.status + '" style="top:' + (top + 1) + 'px;height:' + (ht - 3) + 'px" data-act="rbk" data-id="' + b.booking_id + '"><b>' + (b.kind === 'aula' ? '<span class="aula-tag">AULA</span>' : '') + esc(b.customer_name) + '</b>' +
           '<span class="mono">' + b.start + '–' + b.end + '</span>' + (ht > 64 ? '<div style="margin-top:4px">' + chip(PS, b.payment_status) + '</div>' : '') + '</div>';
       });
       if (showNow) h += '<div class="nowline" style="top:' + ((nl.min - open) / step * ROW_H) + 'px"></div>';
@@ -2754,6 +2892,7 @@ var Recep = {
       '<div class="field"><label>Início</label><select class="input" id="n-start">' + Recep.timeOptions(start || '18:00') + '</select></div></div>' +
       '<div class="grid2"><div class="field"><label>Duração</label><select class="input" id="n-dur">' + Recep.durOptions(cfg.default_duration_min) + '</select></div>' +
       '<div class="field"><label>Valor (R$)</label><input class="input mono" id="n-price" inputmode="decimal"></div></div>' +
+      '<div class="field"><label>Tipo de reserva</label><div class="seg kind-seg" id="n-kind">' + [['jogo', 'Jogo livre'], ['aula', 'Aula']].map(function (k, i) { return '<button type="button" class="' + (i ? '' : 'on') + '" data-act="kindpick" data-v="' + k[0] + '">' + k[1] + '</button>'; }).join('') + '</div></div>' +
       '<div class="field"><label>Nome</label><input class="input" id="n-name" autofocus></div>' +
       '<div class="field"><label>Celular</label><input class="input" id="n-phone" inputmode="tel"></div>' +
       '<div class="field"><label>Observação</label><input class="input" id="n-notes"></div>' +
@@ -2770,7 +2909,7 @@ var Recep = {
     busy(btn);
     Wait.show('Criando reserva', ['Guardando o horário…', 'Salvando no sistema…', 'Quase lá…']);
     api('create_booking', { court_id: val('n-court'), date: S.recepDate, start: val('n-start'), duration_min: Number(val('n-dur')),
-      customer_name: val('n-name'), phone: val('n-phone'), notes: val('n-notes'), price_override: val('n-price').replace(',', '.') })
+      customer_name: val('n-name'), phone: val('n-phone'), notes: val('n-notes'), price_override: val('n-price').replace(',', '.'), kind: kindOf('n-kind') })
       .then(function () { closeSheet(); toast('Reserva criada'); Recep.load(); })
       .catch(function (e) { btn.disabled = false; fail(e); });
   },
@@ -2788,6 +2927,7 @@ var Recep = {
       '<div class="kv"><span class="muted">Valor</span><b class="mono">' + brl(b.price) + '</b></div>' +
       (b.pay_mode === 'online' ? '<div class="kv"><span class="muted">Online</span><b class="mono">' + brl(b.online_amount) + '</b></div>' : '') +
       '<div class="kv"><span class="muted">Celular</span><b>' + (b.phone ? '<a href="https://wa.me/55' + b.phone + '" target="_blank" rel="noopener">' + fmtPhone(b.phone) + '</a>' : '—') + '</b></div>' +
+      '<div class="kv"><span class="muted">Tipo</span><b>' + kindChip(b.kind) + '</b></div>' +
       '<div class="kv"><span class="muted">Origem</span><b>' + (b.source === 'app' ? 'App' : 'Recepção') + '</b></div>' +
       (b.notes ? '<div class="kv"><span class="muted">Obs.</span><b>' + esc(b.notes) + '</b></div>' : '') + '</div>' +
       '<div class="row wrap" style="margin-top:14px">' + acts.map(function (a) { return '<button class="btn ' + a[2] + '" data-act="rstatus" data-id="' + b.booking_id + '" data-s="' + a[0] + '">' + a[1] + '</button>'; }).join('') + '</div>' +
@@ -2968,26 +3108,93 @@ var Admin = {
       var occ = r.courts.length ? r.courts.reduce(function (s, c) { return s + c.occupancy; }, 0) / r.courts.length : 0;
       var byM = Object.keys(r.received.by_method).map(function (k) { var p = k.split(':'); return { ch: p[0], m: p[1], v: r.received.by_method[k] }; }).sort(function (a, b) { return b.v - a.v; });
       var st = r.bookings.by_status;
-      document.getElementById('a-rep').innerHTML = '<div class="kpis">' +
+      var tbl = function (head, rows, empty, cols) {
+        return '<div class="tbl-wrap"><table class="tbl"><thead><tr>' + head + '</tr></thead><tbody>' + (rows || '<tr><td colspan="' + cols + '" class="muted">' + empty + '</td></tr>') + '</tbody></table></div>';
+      };
+      var kpis = '<div class="kpis">' +
         '<div class="kpi"><div class="l">Quadras reservadas</div><div class="v">' + brl(r.bookings.reserved) + '</div><div class="s">' + r.bookings.reserved_count + (r.bookings.reserved_count === 1 ? ' reserva' : ' reservas') + (r.bookings.to_receive > 0 ? ' · ' + brl(r.bookings.to_receive) + ' a receber' : '') + '</div></div>' +
         '<div class="kpi"><div class="l">Quadras faturado</div><div class="v">' + brl(r.bookings.billed) + '</div><div class="s">' + r.bookings.paid_count + (r.bookings.paid_count === 1 ? ' reserva paga' : ' reservas pagas') + '</div></div>' +
         '<div class="kpi"><div class="l">Bar faturado</div><div class="v">' + brl(r.bar.billed) + '</div><div class="s">' + r.bar.orders + ' pedidos · ticket ' + brl(r.bar.ticket) + '</div></div>' +
         '<div class="kpi"><div class="l">Recebido</div><div class="v">' + brl(r.received.total) + '</div><div class="s">' + r.open_tabs + ' comanda(s) aberta(s)</div></div>' +
         '<div class="kpi"><div class="l">Ocupação média</div><div class="v">' + occ.toFixed(0) + '%</div><div class="s">' + (st.no_show || 0) + ' no-show · ' + (st.cancelada || 0) + ' cancel.</div></div></div>' +
-        (r.pending_refunds ? '<div class="notice" style="margin-bottom:16px"><b>' + r.pending_refunds + ' reembolso(s) pendente(s).</b> Estorne pelo painel do Mercado Pago.</div>' : '') +
-        '<div class="grid2" style="gap:16px;align-items:start"><div class="sect"><h3>Ocupação por quadra</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Quadra</th><th class="num">Horas</th><th>Ocupação</th><th class="num">Reservado</th><th class="num">Faturado</th></tr></thead><tbody>' +
-        r.courts.map(function (c) { return '<tr><td>' + esc(c.name) + '</td><td class="num">' + c.hours + '</td><td><div class="row"><div class="bar-in grow"><i style="width:' + Math.min(100, c.occupancy) + '%"></i></div><span class="mono small">' + c.occupancy.toFixed(0) + '%</span></div></td><td class="num">' + brl(c.reserved) + '</td><td class="num">' + brl(c.billed) + '</td></tr>'; }).join('') +
-        '</tbody></table></div></div>' +
-        '<div class="sect"><h3>Recebido por forma</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Forma</th><th>Canal</th><th class="num">Valor</th></tr></thead><tbody>' +
-        (byM.length ? byM.map(function (x) { return '<tr><td>' + (ML[x.m] || x.m) + '</td><td>' + (x.ch === 'online' ? '<span class="chip blue">App</span>' : '<span class="chip">Balcão</span>') + '</td><td class="num">' + brl(x.v) + '</td></tr>'; }).join('') : '<tr><td colspan="3" class="muted">Nada recebido no período.</td></tr>') +
-        '</tbody></table></div></div>' +
-        '<div class="sect"><h3>Mais vendidos no bar</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Item</th><th class="num">Qtd</th><th class="num">Receita</th></tr></thead><tbody>' +
-        (r.bar.top_items.length ? r.bar.top_items.map(function (i) { return '<tr><td>' + esc(i.name) + '</td><td class="num">' + i.qty + '</td><td class="num">' + brl(i.revenue) + '</td></tr>'; }).join('') : '<tr><td colspan="3" class="muted">Sem pedidos.</td></tr>') +
-        '</tbody></table></div></div>' +
-        '<div class="sect"><h3>Horários mais procurados</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>Início</th><th class="num">Reservas</th></tr></thead><tbody>' +
-        (r.peak_starts.length ? r.peak_starts.map(function (p) { return '<tr><td class="mono">' + p.start + '</td><td class="num">' + p.n + '</td></tr>'; }).join('') : '<tr><td colspan="2" class="muted">—</td></tr>') +
-        '</tbody></table></div></div></div>';
+        (r.pending_refunds ? '<div class="notice" style="margin-bottom:16px"><b>' + r.pending_refunds + ' reembolso(s) pendente(s).</b> Estorne pelo painel do Mercado Pago.</div>' : '');
+      // agenda de hoje
+      var ag = r.agenda;
+      var agenda = '<div class="sect c7"><div class="sect-h"><h3>Agenda de hoje <span class="muted small" style="font-weight:500">' + dShort(ag.date) + '</span></h3>' +
+        '<a class="small" href="' + (APP === 'completo' || MODE.routes.indexOf('recepcao') >= 0 ? '#/recepcao' : LINK.equipe) + '">Abrir recepção →</a></div>' +
+        '<div class="ag-sum"><span class="chip">' + ag.count + (ag.count === 1 ? ' reserva' : ' reservas') + '</span><span class="chip">' + fmtH(ag.hours) + ' de quadra</span>' +
+        '<span class="chip">' + ag.occupancy.toFixed(0) + '% ocupação</span>' + (ag.aulas ? '<span class="chip blue">' + ag.aulas + (ag.aulas === 1 ? ' aula' : ' aulas') + '</span>' : '') +
+        (ag.to_receive > 0 ? '<span class="chip amber">' + brl(ag.to_receive) + ' a receber</span>' : (ag.count ? '<span class="chip green">Tudo pago</span>' : '')) + '</div>' +
+        '<div class="ag-scroll">' + tbl('<th>Horário</th><th>Quadra</th><th>Cliente</th><th>Tipo</th><th>Situação</th><th class="num">Valor</th>',
+          ag.items.map(function (b) {
+            var bs = BK[b.status] || [b.status, ''];
+            var pay = b.payment_status === 'pago' ? '<span class="chip green">Pago</span>' : b.payment_status === 'sinal_pago' ? '<span class="chip">Sinal pago</span>' : '';
+            return '<tr class="' + (b.now ? 'now' : b.past ? 'past' : '') + '"><td class="mono">' + b.start + ' a ' + b.end + (b.now ? ' <span class="chip green">agora</span>' : '') + '</td><td>' + esc(b.court) + '</td>' +
+              '<td>' + esc(b.customer_name) + '</td><td>' + kindChip(b.kind) + '</td><td><span class="chip ' + bs[1] + '">' + bs[0] + '</span> ' + pay + '</td><td class="num">' + brl(b.price) + '</td></tr>';
+          }).join(''), 'Nenhuma reserva para hoje.', 6) + '</div></div>';
+      // por tipo
+      var kTot = r.by_kind.reduce(function (a, k) { return a + k.count; }, 0);
+      var kinds = '<div class="sect c5"><div class="sect-h"><h3>Reservas por tipo</h3><span class="muted small">no período</span></div><div class="card kind-card">' +
+        (kTot ? '<div class="kindbar">' + r.by_kind.map(function (k) { return k.count ? '<i style="width:' + (k.count / kTot * 100) + '%;background:' + KIND_COLOR[k.kind] + '" title="' + k.label + '"></i>' : ''; }).join('') + '</div>' : '') +
+        r.by_kind.map(function (k) {
+          var pct = kTot ? Math.round(k.count / kTot * 100) : 0;
+          return '<div class="kind-row"><span class="dot" style="background:' + KIND_COLOR[k.kind] + '"></span><div><b>' + k.label + '</b><div class="small muted">' + k.count + (k.count === 1 ? ' reserva' : ' reservas') + ' · ' + fmtH(k.hours) + '</div></div>' +
+            '<div style="text-align:right"><div class="mono"><b>' + brl(k.value) + '</b></div><div class="small muted">' + pct + '% das reservas</div></div></div>';
+        }).join('') + (kTot ? '' : '<p class="small muted" style="margin:8px 0 0">Sem reservas no período.</p>') + '</div></div>';
+      // clientes
+      var custs = '<div class="sect c7"><div class="sect-h"><h3>Clientes com maior consumo</h3><span class="muted small">quadras + bar no período</span></div>' +
+        tbl('<th>#</th><th>Cliente</th><th class="num">Reservas</th><th class="num">Pedidos</th><th class="num">Quadras</th><th class="num">Bar</th><th class="num">Total</th>',
+          r.top_customers.map(function (c, i) {
+            return '<tr><td class="mono muted">' + (i + 1) + '</td><td><b>' + esc(c.name) + '</b>' + (c.phone ? '<div class="small muted mono">' + fmtPhone(c.phone) + '</div>' : '') + '</td><td class="num">' + c.bookings + '</td><td class="num">' + c.orders + '</td>' +
+              '<td class="num">' + brl(c.courts) + '</td><td class="num">' + brl(c.bar) + '</td><td class="num"><b>' + brl(c.total) + '</b></td></tr>';
+          }).join(''), 'Sem consumo no período.', 7) + '</div>';
+      var courtsT = '<div class="sect c5"><div class="sect-h"><h3>Ocupação por quadra</h3></div>' +
+        tbl('<th>Quadra</th><th class="num">Horas</th><th>Ocupação</th><th class="num">Reservado</th><th class="num">Faturado</th>',
+          r.courts.map(function (c) { return '<tr><td>' + esc(c.name) + '</td><td class="num">' + c.hours + '</td><td><div class="row"><div class="bar-in grow"><i style="width:' + Math.min(100, c.occupancy) + '%"></i></div><span class="mono small">' + c.occupancy.toFixed(0) + '%</span></div></td><td class="num">' + brl(c.reserved) + '</td><td class="num">' + brl(c.billed) + '</td></tr>'; }).join(''), '—', 5) + '</div>';
+      var pe = '<div class="sect c7"><div class="sect-h"><h3>Torneios <span class="pe-tag">PadelEye</span></h3></div><div id="pe-tour" class="card pe-card"><div class="spinner"></div></div></div>' +
+        '<div class="sect c5"><div class="sect-h"><h3>Ranking <span class="pe-tag">PadelEye</span></h3><div class="seg sm" id="pe-rt">' +
+        [['t', 'Torneios'], ['s', 'Sessões']].map(function (x) { return '<button class="' + ((S.peRank || 't') === x[0] ? 'on' : '') + '" data-act="perank" data-v="' + x[0] + '">' + x[1] + '</button>'; }).join('') +
+        '</div></div><div id="pe-rank" class="card pe-card"><div class="spinner"></div></div></div>';
+      var small = '<div class="sect c4"><div class="sect-h"><h3>Recebido por forma</h3></div>' +
+        tbl('<th>Forma</th><th>Canal</th><th class="num">Valor</th>', byM.map(function (x) { return '<tr><td>' + (ML[x.m] || x.m) + '</td><td>' + (x.ch === 'online' ? '<span class="chip blue">App</span>' : '<span class="chip">Balcão</span>') + '</td><td class="num">' + brl(x.v) + '</td></tr>'; }).join(''), 'Nada recebido no período.', 3) + '</div>' +
+        '<div class="sect c4"><div class="sect-h"><h3>Mais vendidos no bar</h3></div>' +
+        tbl('<th>Item</th><th class="num">Qtd</th><th class="num">Receita</th>', r.bar.top_items.slice(0, 6).map(function (i) { return '<tr><td>' + esc(i.name) + '</td><td class="num">' + i.qty + '</td><td class="num">' + brl(i.revenue) + '</td></tr>'; }).join(''), 'Sem pedidos.', 3) + '</div>' +
+        '<div class="sect c4"><div class="sect-h"><h3>Horários mais procurados</h3></div>' +
+        tbl('<th>Início</th><th class="num">Reservas</th>', r.peak_starts.map(function (p) { return '<tr><td class="mono">' + p.start + '</td><td class="num">' + p.n + '</td></tr>'; }).join(''), '—', 2) + '</div>';
+      document.getElementById('a-rep').innerHTML = kpis + '<div class="ov">' + agenda + kinds + custs + courtsT + pe + small + '</div>';
+      Admin.loadPadelEye();
     }).catch(fail);
+  },
+  loadPadelEye: function () {
+    var tBox = document.getElementById('pe-tour'), rBox = document.getElementById('pe-rank'); if (!tBox) return;
+    var draw = function (pe) {
+      if (!document.getElementById('pe-tour')) return;
+      if (!pe.configured) {
+        var msg = '<div class="pe-empty"><b>PadelEye não conectado.</b><p class="small muted">No Apps Script, rode <span class="mono">setPadelEyeSheet(\'link da planilha do PadelEye\')</span> uma vez. Torneios e ranking aparecem aqui.</p></div>';
+        tBox.innerHTML = msg; rBox.innerHTML = msg; return;
+      }
+      var tRow = function (t, up) {
+        var dd = t.date.split('-');
+        return '<li class="' + (up ? 'up' : '') + '"><div class="t-date"><b>' + dd[2] + '</b><span>' + MON[Number(dd[1]) - 1] + '</span></div><div class="grow"><div class="t-name">' + esc(t.name) + '</div>' +
+          '<div class="small muted">' + [t.category ? 'Cat. ' + esc(t.category) : '', esc(t.venue)].filter(Boolean).join(' · ') + '</div></div>' +
+          (up ? '<span class="chip green">' + (t.date === S.boot.config.today ? 'Hoje' : 'em ' + daysBetween(S.boot.config.today, t.date) + 'd') + '</span>' : '<span class="chip">Finalizado</span>') + '</li>';
+      };
+      tBox.innerHTML = '<div class="pe-cols"><div><div class="pe-sub">Próximos</div><ul class="tlist">' + (pe.next.length ? pe.next.map(function (t) { return tRow(t, true); }).join('') : '<li class="muted small">Nenhum torneio agendado.</li>') + '</ul></div>' +
+        '<div><div class="pe-sub">Últimos</div><ul class="tlist">' + (pe.past.length ? pe.past.map(function (t) { return tRow(t, false); }).join('') : '<li class="muted small">Nenhum torneio registrado.</li>') + '</ul></div></div>';
+      var medal = function (i) { return ['🥇', '🥈', '🥉'][i] || '<span class="mono muted">' + (i + 1) + '</span>'; };
+      if ((S.peRank || 't') === 't') {
+        rBox.innerHTML = pe.ranking.length ? '<table class="tbl rank"><thead><tr><th></th><th>Jogador</th><th class="num">Torneios</th><th class="num">Títulos</th><th class="num">Pontos</th></tr></thead><tbody>' +
+          pe.ranking.map(function (p, i) { return '<tr><td class="rk">' + medal(i) + '</td><td><b>' + esc(p.player) + '</b></td><td class="num">' + p.tournaments + '</td><td class="num">' + (p.titles || '—') + '</td><td class="num"><b>' + p.pts + '</b></td></tr>'; }).join('') + '</tbody></table>'
+          : '<p class="small muted">Sem pontuação de torneios ainda.</p>';
+      } else {
+        rBox.innerHTML = pe.session_ranking.length ? '<table class="tbl rank"><thead><tr><th></th><th>Jogador</th><th class="num">Jogos</th><th class="num">Vitórias</th><th class="num">Aprov.</th></tr></thead><tbody>' +
+          pe.session_ranking.map(function (p, i) { return '<tr><td class="rk">' + medal(i) + '</td><td><b>' + esc(p.player) + '</b></td><td class="num">' + p.matches + '</td><td class="num">' + p.wins + '</td><td class="num"><b>' + p.win_rate.toFixed(0) + '%</b></td></tr>'; }).join('') + '</tbody></table><p class="small muted" style="margin:8px 0 0">Mínimo de 10 jogos nas sessões.</p>'
+          : '<p class="small muted">Sem jogadores com 10+ jogos nas sessões.</p>';
+      }
+    };
+    if (Admin.pe) return draw(Admin.pe);
+    api('padeleye_board', {}).then(function (pe) { Admin.pe = pe; draw(pe); })
+      .catch(function (e) { var m = '<p class="small muted">Não consegui ler o PadelEye: ' + esc(e.message) + '</p>'; tBox.innerHTML = m; rBox.innerHTML = m; });
   },
 
   v_precos: function () { Pz.load(); },
@@ -3754,6 +3961,8 @@ var H = {
   tclose: function (el) { Recep.tabClose(el); },
   // bar
   bstatus: function (el) { Bar.setStatus(el); },
+  kindpick: function (el) { el.parentNode.querySelectorAll('button').forEach(function (b) { b.classList.toggle('on', b === el); }); },
+  perank: function (el) { S.peRank = el.dataset.v; document.querySelectorAll('#pe-rt button').forEach(function (b) { b.classList.toggle('on', b === el); }); Admin.loadPadelEye(); },
   bcancel: function (el) { if (confirm('Cancelar este pedido?')) Bar.setStatus(el, 'cancelado'); },
   bsound: function (el) { S.sound = !S.sound; el.textContent = S.sound ? '🔔 Som ligado' : '🔕 Ativar som'; if (S.sound) Bar.beep(); },
   brefresh: function () { Bar.load(); },
